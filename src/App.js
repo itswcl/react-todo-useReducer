@@ -2,6 +2,7 @@ import './App.css';
 import React, { useReducer, useState } from 'react'
 import Todo from './Todo';
 
+// export the action list for child used
 export const ACTION = {
   ADD_TODO: 'add-todo',
   TOGGLE_TODO: 'toggle-todo',
@@ -48,7 +49,9 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault()
     // the name coming from the input name state
+    // pass the action and payload which is the name in this case
     dispatch({ type: ACTION.ADD_TODO, payload: { name: name } })
+    // reset the name input field
     setName("")
   }
 
@@ -56,11 +59,17 @@ function App() {
 
   return (
     <div className="App">
+      {/* once submitted we run the dispatch with the input name */}
       <form onSubmit={handleSubmit}>
+        {/* update the name state on change */}
         <input type="text" onChange={(e) => setName(e.target.value)} value={name} />
         <button>Submit</button>
       </form>
       {
+        // we print out entire list with todos.map
+        // each todo we return a Todo component
+        // and we pass the id as KYE and todo as todo
+        // most important the dispatch function to child
         todos.map((todo) => {
           return (
             <Todo key={todo.id} todo={todo} dispatch={dispatch} />
